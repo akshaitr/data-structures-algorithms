@@ -35,12 +35,10 @@ function fibonacci(num) {
   } else if(num === 1) {
     return 1;
   }
-
   // Return cache value if it already exists
   if(cache[num]) {
     return cache[num];
   }
-
   // Cache the answer so later calls can use it
   cache[num] = fibonacci(num-1) * fibonacci(num-2);
   return cache[num];
@@ -67,3 +65,53 @@ Things to consider when analyzing a recursive function:
   - Total leaf nodes in the recursive tree
   - Look at the depth impact on the space complexity
 
+## Primitives
+
+### Check if a number is a palindrome
+
+Constraints: Do not convert the number to string
+
+```javascript
+function isPalindrome(num) {
+  if (num < 0) {
+    return false;
+  }
+  const totalDigits = Math.floor(Math.log10(num)) + 1;
+  let msdMask = Math.pow(10, totalDigits - 1);
+  for (let i = 0; i < totalDigits / 2; i++) {
+    let msd = Math.floor(num / msdMask); // Most Significant Digit
+    let lsd = num % 10; // Least Significant Digit
+    if (msd !== lsd) {
+      return false;
+    }
+    num %= msdMask;
+    num = Math.floor(num / 10);
+    msdMask = Math.floor(msdMask / 100);
+  }
+  return true;
+}
+```
+
+### Check if a non-negative number is power of two
+
+Constraints: Your solution should run in O(1) time
+
+```javascript
+function isPowerOfTwo(num) {
+  return num > 0 && (num & (num - 1)) === 0;
+}
+```
+
+### Check if a non-negative number is power of four
+
+Constraints: Your solution should run in O(1) time
+
+```javascript
+function isPowerOfFour(num) {
+  const mask = 0x55555555;
+  const isNonZero = num > 0;
+  const isSingleLeadingBit = (num & (num - 1)) === 0;
+  const onlyOddPositionBitsAreSet = (num & mask) === num;
+  return isNonZero && isSingleLeadingBit && onlyOddPositionBitsAreSet;
+}
+```
