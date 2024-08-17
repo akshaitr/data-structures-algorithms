@@ -40,7 +40,7 @@ function fibonacci(num) {
     return cache[num];
   }
   // Cache the answer so later calls can use it
-  cache[num] = fibonacci(num-1) * fibonacci(num-2);
+  cache[num] = fibonacci(num-1) + fibonacci(num-2);
   return cache[num];
 }
 ```
